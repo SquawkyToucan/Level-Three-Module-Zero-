@@ -45,13 +45,20 @@ public class TextUndoRedo implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
+		if(e.getKeyCode() != KeyEvent.VK_BACK_SPACE && e.getKeyCode() != KeyEvent.VK_ENTER && e.getKeyCode() != KeyEvent.VK_CAPS_LOCK&& e.getKeyCode() != KeyEvent.VK_TAB && e.getKeyCode() != KeyEvent.VK_SHIFT) {
 			text.setText(text.getText() + e.getKeyChar());
 			frame.pack();
+			history.clear();
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-			char a = text.getText().charAt(text.getText().length()-2);
+			char a = text.getText().charAt(text.getText().length()-1);
+			text.setText(text.getText().substring(0, text.getText().length() - 1));
 			history.add(a);
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_CAPS_LOCK) {
+			text.setText(text.getText() + history.pop());
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_TAB) {
 			JOptionPane.showMessageDialog(null, history);
 		}
 		else {
